@@ -3,6 +3,13 @@ multiple object tracking with longe range radar sensor
 
 This package was created for multiple object tracking with ROS firmware. src folder cotains cpp files to develop algorthms. It is necesary to install Eigen, OPENCV 4.0 and PCL Libraries. These can be installed through ROS installation. ROS version is NOETİC-DESKTOP. the algorithm can track 10 object simultaneusly.
 
+For installation;
+cd /home/($username)/($your workspace)/src
+git clone https://github.com/ege2097yilmaz/trackerOfObjects.git
+cd ..
+rosdep install --from-paths src --ignore-src -r -y
+catkin_make (if it is running slowly, "catkin_make -DCMAKE_BUILD_TYPE=Release" is recomended)
+
 To run the algorithms, firstly run "roslaunch deneme main.launch" file, then run "rosbag play lrr_test_data.bag", which is in one_sensor_bag file. There are two bag files in this folder. Both can be runned through this command. 
 
 ![image](https://user-images.githubusercontent.com/109589040/187860323-9db87209-4e56-4872-b27d-7ebbda564e91.png)
@@ -11,8 +18,11 @@ After then, RVIZ can be seen with red cubes and also coloured cubes that indicat
 
 References:
 https://github.com/praveen-palanisamy/multiple-object-tracking-lidar
+
 https://www.udacity.com/course/self-driving-car-engineer-nanodegree--nd0013
+
 https://github.com/prat96/Centroid-Object-Tracking
+
 https://pcl.readthedocs.io/projects/tutorials/en/latest
 
 This implemetation referenced these sources.
