@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+
+<launch>
+
+	<!-- common parameters -->
+	<env name="ROSCONSOLE_CONFIG_FILE" value="$(find deneme)/launch/custom_rosconsole.conf"/>
+  	<param name ="/use_sim_time" value="false"/>
+	<arg name="gui" default="True" />
+	<param name="use_gui" value="$(arg gui)"/>
+	<arg name="bag_file_name" value="lrr_test_data.bag"/>
+
+	<!-- play rrosbag -->
+	<!-- <node pkg="rosbag" type="play" name="rosbag" args="clock $(find deneme)/one_sensor_bag/$(arg bag_file_name)"/> -->
+
+	<!-- robot urdf -->
+	<param name="robot_description" command="cat $(find deneme)/urdf/agv.urdf" />
+	
+    <!-- joint state publisher -->
+  	<node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" ></node> 
+
+  	<!-- start robot state publisher -->
+ 	<node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" output="screen" />
+
+	<!-- converting float32multiarray to pointcloud -->
+    <node pkg="deneme" type="array_marker" name="points_and_lines" output="screen"/>
+
+	<!-- filtering for NAN values -->
+	<node pkg="deneme" type="filtererPointCloud" name="filterer_pointcloud" output="screen"/>
+
+	<!-- object tracker -->
+    <node pkg="deneme" type="tracker_node" name="kf_tracker" output="screen"/>
+	
+	<!-- rviz --> 
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find deneme)/rviz/rviz.rviz" />
+</launch>
